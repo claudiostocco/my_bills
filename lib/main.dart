@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'theme.dart';
+import 'views/home.dart';
+import 'views/login.dart';
+
 void main() {
   runApp(const MyBills());
 }
@@ -11,32 +15,12 @@ class MyBills extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Minhas Contas',
-      theme: ThemeData.dark(),
-      home: const Home(),
-    );
-  }
-}
-
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
-
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(''),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[],
-        ),
-      ),
+      theme: CustomizedTheme(kThemes.dark).getCustomizedTheme(),
+      initialRoute: '/',
+      routes: {
+        '/login': (BuildContext context) => const Login(),
+        '/home': (BuildContext context) => const Home(),
+      },
     );
   }
 }
