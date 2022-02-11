@@ -18,7 +18,7 @@ class MyBills extends StatelessWidget {
       theme: CustomizedTheme(kThemes.dark).getCustomizedTheme(),
       initialRoute: '/',
       routes: {
-        '/login': (BuildContext context) => const Login(),
+        '/': (BuildContext context) => const Login(),
         '/home': (BuildContext context) => const Home(),
       },
     );
