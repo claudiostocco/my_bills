@@ -1,47 +1,79 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
+
+import '/constants/widgets.dart';
+import '../widgets/input_field.dart';
 
 class LoginCard extends StatelessWidget {
   const LoginCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    _textEditRow({required IconData icon, required String inputLabel}) {
-      return Row(
-        children: [
-          Icon(icon), 
-          const TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: inputLabel,
+    _textEditRow({required IconData icon, required String inputLabel, bool isPassword = false, int flex = 4}) {
+      return Expanded(
+        flex: flex,
+        child: Row(
+          children: [
+            Icon(icon), 
+            const SizedBox(width: 20,),
+            InputField(
+              inputLabel: inputLabel,
+              inputType: isPassword ? kInputTypes.itPassword : kInputTypes.itEmail,
             ),
-          ),
-        ],
+          ],
+        ),
       );
     }
-    _login() {
+
+    Expanded _submitButton(Function login, {int flex = 4}) {
+      return Expanded(
+            flex: flex,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: ElevatedButton(
+                  onPressed: () => login(),
+                  child: const Text('Entrar'),
+                ),
+              ),
+            ),
+          );
+    }
+
+    void _login() {
+      print('login');
       Navigator.pushNamed(context, '/home');
+    }
+
+    Widget _separator({int flex = 1}) {
+      return Expanded(
+            flex: flex,
+            child: const SizedBox(),
+      );
     }
 
     return Container(
       padding: const EdgeInsets.all(30),
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      color: Colors.amber,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(child: Image.asset('assets/images/cadeado.png')),
-          // Expanded(child: SizedBox(width: MediaQuery.of(context).size.width, child: Row(children: const [Icon(Icons.email), TextField(),],))),
-          // Expanded(child: _textEditRow(icon: Icons.email, label: 'Email')),
-      //     Expanded(child: _textEditRow(icon: Icons.password, label: 'Senha')),
-      //     Expanded(
-      //       child: ElevatedButton(
-      //         onPressed: _login,
-      //         child: const Text('Entrar'),
-      //       ),
-      //     )
+          Image.asset('assets/images/cadeado.png'),
+          Container(
+              color: Colors.black.withOpacity(0.5),
+              height: 200,
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  _textEditRow(icon: Icons.email, inputLabel: 'Email'),
+                  _separator(),
+                  _textEditRow(icon: Icons.password, inputLabel: 'Senha', isPassword: true),
+                  _separator(flex: 2),
+                  _submitButton(_login)
+                ],
+              ),
+            ),
         ],
       ),
     );
