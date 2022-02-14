@@ -9,6 +9,9 @@ class CustomizedTheme {
 
   ThemeData getCustomizedTheme() {
     var initialTheme = currentTheme == kThemes.dark ? ThemeData.dark() : ThemeData.light();
-    return initialTheme.copyWith();
+    return initialTheme.copyWith(
+        colorScheme: initialTheme.colorScheme.copyWith(
+      primary: Colors.blue.shade900,
+    ));
   }
 }
