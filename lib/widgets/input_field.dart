@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import '/constants/widgets.dart';
 
 class InputField extends StatelessWidget {
-  const InputField({
-    Key? key,
-    required this.inputLabel,
-    this.inputType = kInputTypes.itText
-  }) : super(key: key);
+  const InputField({Key? key, required this.inputLabel, this.inputType = kInputTypes.itText, this.onChanged})
+      : super(key: key);
 
   final String inputLabel;
   final kInputTypes inputType;
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +19,8 @@ class InputField extends StatelessWidget {
           border: const OutlineInputBorder(),
           labelText: inputLabel,
         ),
+        onChanged: onChanged,
       ),
     );
   }
 }
-

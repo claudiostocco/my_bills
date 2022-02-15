@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/separator.dart';
+import '/controllers/app_controller.dart';
+import '/widgets/separator.dart';
 import '/constants/widgets.dart';
-import '../widgets/input_field.dart';
+import '/widgets/input_field.dart';
+import '/utils/alerts.dart';
 
 class LoginCard extends StatelessWidget {
-  const LoginCard({Key? key}) : super(key: key);
+  LoginCard({Key? key}) : super(key: key);
+  String _user = '';
+  String _pass = '';
 
   @override
   Widget build(BuildContext context) {
-    _textEditRow({required IconData icon, required String inputLabel, bool isPassword = false, int flex = 4}) {
+    _textEditRow({
+      required IconData icon,
+      required String inputLabel,
+      ValueChanged<String>? onChange,
+      bool isPassword = false,
+      int flex = 4,
+    }) {
       return Expanded(
         flex: flex,
         child: Row(
@@ -21,6 +31,7 @@ class LoginCard extends StatelessWidget {
             InputField(
               inputLabel: inputLabel,
               inputType: isPassword ? kInputTypes.itPassword : kInputTypes.itEmail,
+              onChanged: onChange,
             ),
           ],
         ),
@@ -48,7 +59,15 @@ class LoginCard extends StatelessWidget {
     }
 
     void _login() {
-      Navigator.pushReplacementNamed(context, '/home');
+      var ok = AppController.instance.login(
+        _user,
+        _pass,
+        (error) async => await alertError(context: context, title: 'Login', msg: error),
+      );
+      if (ok) {
+        print('_login: ' + AppController.instance.userData!.userEmail);
+        Navigator.pushReplacementNamed(context, '/home');
+      }
     }
 
     return Container(
@@ -66,9 +85,10 @@ class LoginCard extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                _textEditRow(icon: Icons.email, inputLabel: 'Email'),
+                _textEditRow(icon: Icons.email, inputLabel: 'Email', onChange: (value) => _user = value),
                 const Separator(),
-                _textEditRow(icon: Icons.password, inputLabel: 'Senha', isPassword: true),
+                _textEditRow(
+                    icon: Icons.password, inputLabel: 'Senha', isPassword: true, onChange: (value) => _pass = value),
                 const Separator(flex: 2),
                 _submitButton(_login)
               ],
@@ -96,7 +116,7 @@ class Login extends StatelessWidget {
             alignment: Alignment.topCenter,
           ),
         ),
-        const LoginCard(),
+        LoginCard(),
       ]),
     );
   }
