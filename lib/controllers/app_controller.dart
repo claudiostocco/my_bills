@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../constants/constants.dart';
 import '../types/user_data.dart';
 
 class AppController extends ChangeNotifier {
@@ -8,10 +9,11 @@ class AppController extends ChangeNotifier {
   UserData? userData;
 
   bool login(String user, String pass, void Function(String error)? onError) {
-    if (user.isEmpty || pass.isEmpty || !user.contains('@')) {
+    if (user.isEmpty || pass.isEmpty || !RegExp(kRegExpIsValidEmail).hasMatch(user)) {
       if (onError != null) onError('Usuário ou senha inválidos!');
       return false;
     }
+
     userData = const UserData(
       'claudiostocco@gmail.com',
       'Claudio Marcio Stocco',
