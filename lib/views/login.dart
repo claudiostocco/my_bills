@@ -58,8 +58,8 @@ class LoginCard extends StatelessWidget {
       );
     }
 
-    void _login() {
-      var ok = AppController.instance.login(
+    void _login() async {
+      var ok = await AppController.instance.login(
         _user,
         _pass,
         (error) async => await alertError(context: context, title: 'Login', msg: error),
