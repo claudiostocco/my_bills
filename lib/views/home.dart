@@ -11,27 +11,44 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int _menuItem = 0;
+
   void _logout() {
     Navigator.pushReplacementNamed(context, '/');
+  }
+
+  void _setMenuItem(int item) {
+    setState(() => _menuItem = item);
   }
 
   Widget _drawer() {
     return Column(
       children: [
-        DrawerItem(userData: AppController.instance.userData),
-        DrawerItem(icon: Icons.list, title: 'Todas', onTap: () => {}),
-        DrawerItem(icon: Icons.list, title: 'A vencer', onTap: () => {}),
-        DrawerItem(icon: Icons.list, title: 'Por Período', onTap: () => {}),
+        DrawerItem(userData: AppController.instance.userData, anonymous: AppController.instance.userData == null),
+        DrawerItem(icon: Icons.list, title: 'Todas', onTap: () => _setMenuItem(0)),
+        DrawerItem(icon: Icons.list, title: 'A vencer', onTap: () => _setMenuItem(1)),
+        DrawerItem(icon: Icons.list, title: 'Por Período', onTap: () => _setMenuItem(2)),
         const DrawerItem(separator: true),
         DrawerItem(icon: Icons.logout, title: 'Sair', onTap: () => {_logout()}),
       ],
     );
   }
 
+  Widget _listingBills() {
+    switch (_menuItem) {
+      case 0:
+        return const Text('Todas as contas');
+      case 1:
+        return const Text('Contas a vencer');
+      case 2:
+        return const Text('Contas a vencidas');
+      default:
+        return const Text('Indefinido');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('build: ' + AppController.instance.userData!.userEmail);
-
     return Scaffold(
       drawer: Drawer(
         child: _drawer(),
@@ -47,10 +64,7 @@ class _HomeState extends State<Home> {
         title: Text('Minhas Contas'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[],
-        ),
+        child: _listingBills(),
       ),
     );
   }

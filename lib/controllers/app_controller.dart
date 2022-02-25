@@ -17,6 +17,7 @@ class AppController extends ChangeNotifier {
 
     var response = await loginApi.login(user, pass);
     userData = response.success ? response.data : null;
+    if (!response.success && onError != null) onError('Usuário não cadastrado ou senha não confere!');
 
     // userData = const UserData(
     //   'claudiostocco@gmail.com',

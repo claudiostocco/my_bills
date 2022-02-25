@@ -7,17 +7,27 @@ import '../../types/api_result.dart';
 import '../../types/user_data.dart';
 
 Future<ApiResult<UserData>> login(String user, String pass) async {
-  var url = Uri.parse(kUrlapi + 'login/' + user + '/' + pass);
+  //var url = Uri.parse(kUrlapi + 'login/' + user + '/' + pass);
+  var url = Uri.parse(kUrlapi + 'users/' + user.replaceAll('.', '-') + '.json');
+
   var response = await http.get(url);
   if (response.statusCode == 200) {
-    jsonDecode(response.body);
+    var jsonResponse = jsonDecode(response.body);
+
+    /* Código necessário somente para o Firebase, se o BackEnd tiver metódo de validção não precisa. */
+    if (jsonResponse == null || jsonResponse['password'] != pass) {
+      return Future(
+        () => ApiResult(false, null),
+      );
+    }
+
     return Future(
       () => ApiResult(
         true,
         UserData(
           user,
-          'Claudio',
-          userImage: 'https://avatars.githubusercontent.com/u/47143084?v=4',
+          jsonResponse['name'],
+          userImage: jsonResponse['avatar'],
         ),
       ),
     );

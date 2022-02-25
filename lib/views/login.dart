@@ -65,7 +65,6 @@ class LoginCard extends StatelessWidget {
         (error) async => await alertError(context: context, title: 'Login', msg: error),
       );
       if (ok) {
-        print('_login: ' + AppController.instance.userData!.userEmail);
         Navigator.pushReplacementNamed(context, '/home');
       }
     }
