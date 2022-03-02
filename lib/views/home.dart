@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_bills/services/api/bills.dart';
 
 import '../controllers/app_controller.dart';
 import '../widgets/drawer_item.dart';
@@ -35,6 +36,8 @@ class _HomeState extends State<Home> {
   }
 
   Widget _listingBills() {
+    getBills(null);
+
     switch (_menuItem) {
       case 0:
         return const Text('Todas as contas');
