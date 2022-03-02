@@ -17,7 +17,7 @@ Future<ApiResult<UserData>> login(String user, String pass) async {
     /* Código necessário somente para o Firebase, se o BackEnd tiver metódo de validção não precisa. */
     if (jsonResponse == null || jsonResponse['password'] != pass) {
       return Future(
-        () => ApiResult(false, null),
+        () => ApiResult(false, null, error: 'Usuário não encontrado ou senha inválida!'),
       );
     }
 
@@ -33,7 +33,7 @@ Future<ApiResult<UserData>> login(String user, String pass) async {
     );
   } else {
     return Future(
-      () => ApiResult(false, null),
+      () => ApiResult(false, null, error: 'Usuário não encontrado ou senha inválida!'),
     );
   }
   // return Future(
