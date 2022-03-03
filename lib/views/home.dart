@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_bills/services/api/bills.dart';
+import 'package:my_bills/utils/alerts.dart';
 
+import '../services/api/bills.dart';
+import '../types/bills_data.dart';
 import '../controllers/app_controller.dart';
 import '../widgets/drawer_item.dart';
 
@@ -12,7 +14,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _menuItem = 0;
+  int _menuItem = -1;
+  List<BillsData>? _listBills = null;
 
   void _logout() {
     Navigator.pushReplacementNamed(context, '/');
@@ -20,6 +23,7 @@ class _HomeState extends State<Home> {
 
   void _setMenuItem(int item) {
     setState(() => _menuItem = item);
+    _getBills();
   }
 
   Widget _drawer() {
@@ -35,8 +39,23 @@ class _HomeState extends State<Home> {
     );
   }
 
+  void _getBills() async {
+    var response = await getBills(null);
+    if (response.success) {
+      setState(() {
+        _listBills = response.data;
+      });
+    } else {
+      await alertError(context: context, title: 'Buscar contas', msg: response.error ?? 'Erro ao buscar contas');
+    }
+  }
+
   Widget _listingBills() {
-    getBills(null);
+    if (_listBills != null) {
+      _listBills?.forEach((element) {
+        print('${element.id} => ${element.description}, ${element.whereSpend}');
+      });
+    }
 
     switch (_menuItem) {
       case 0:
@@ -64,7 +83,7 @@ class _HomeState extends State<Home> {
             icon: const Icon(Icons.logout),
           ),
         ],
-        title: Text('Minhas Contas'),
+        title: const Text('Minhas Contas'),
       ),
       body: Center(
         child: _listingBills(),

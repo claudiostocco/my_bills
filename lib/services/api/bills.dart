@@ -19,32 +19,20 @@ Future<ApiResult<List<BillsData>>> getBills(String? id) async {
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body);
 
-    print(jsonResponse);
-
     List<BillsData> listResponse = List.empty(growable: true);
     (jsonResponse as Map).forEach((key, value) {
-      print(key + '=' + value);
+      listResponse.add(
+        BillsData(
+          key,
+          value['description'] ?? '',
+          value['whereSpend'] ?? '',
+          value['issuedDate'] ?? DateTime.now(),
+          value['dueDate'] ?? DateTime.now(),
+          value['paid'] ?? false,
+          value['amount'] ?? 0,
+        ),
+      );
     });
-    // List<BillsData> listResponse = List.empty(growable: true);
-    // listResponse.add(const BillsData(
-    //   '',
-    //   'descrition',
-    //   'whereSpend',
-    //   false,
-    //   56.12,
-    // ));
-
-    // for (var c in jsonResponse) {
-    // print(c);
-    // }
-
-    // BillsData(
-    //   '',
-    //   jsonResponse['descrition'],
-    //   jsonResponse['whereSpend'],
-    //   jsonResponse['paid'],
-    //   jsonResponse['amount'],
-    // ),
 
     return Future(
       () => ApiResult(
