@@ -11,7 +11,7 @@ class AppController extends ChangeNotifier {
 
   Future<bool> login(String user, String pass, void Function(String error)? onError) async {
     if (user.isEmpty || pass.isEmpty || !RegExp(kRegExpIsValidEmail).hasMatch(user)) {
-      if (onError != null) onError('Usuário ou senha inválidos!');
+      if (onError != null) onError('Usuário ou senha inválidos! (Usuário: ${user} | Senha: ${pass})');
       return false;
     }
 
