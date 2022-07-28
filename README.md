@@ -1,4 +1,4 @@
-# my_bill
+# my_bills
 	Application for personal bills management.
 
 ## Directories
