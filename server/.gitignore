@@ -26,8 +26,10 @@
 #*.obj
 #
 
-#Delphi modules
+#Delphi modules and logs
 .modules/
+Win64/
+logs/
 
 # Delphi compiler-generated binaries (safe to delete)
 *.exe
