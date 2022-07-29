@@ -5,15 +5,13 @@ program mybillsapi;
 {$R *.res}
 
 uses
-  System.SysUtils;
+  System.SysUtils,
+  Server in 'src\Server.pas',
+  Constants in 'src\constants\Constants.pas',
+  UVersao in 'src\resources\UVersao.pas';
 
 var sReponse: String;
     bStartServer: Boolean;
-
-function StartServer: Boolean;
-begin
-   Result := True;
-end;
 
 begin
   try
