@@ -1,0 +1,3 @@
+https://www.youtube.com/watch?v=nX5ijIJcDHQ
+
+https://docs.microsoft.com/pt-br/visualstudio/docker/tutorials/tutorial-persist-data-layer-docker-app-with-vscode
