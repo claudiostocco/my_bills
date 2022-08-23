@@ -29,6 +29,7 @@
 #Delphi modules and logs
 .modules/
 Win64/
+Linux64/
 logs/
 
 # Delphi compiler-generated binaries (safe to delete)
