@@ -6,7 +6,7 @@ uses System.SysUtils, System.Classes, System.JSON,
      (* Horse Units *)
      Horse, Horse.CORS, Horse.Jhonson,
      (* Project Units *)
-     Constants, UVersao;
+     Constants, UVersao, User;
 
 function StartServer: Boolean;
 
@@ -80,6 +80,8 @@ begin
                   begin
                      Res.Send('<H1><b>MyBillsAPI</b>: API de recursos para para gerenciamento de contas pessoais.</H1>');
                   end);
+
+   userRegistry;
 end;
 
 function StartServer: Boolean;
