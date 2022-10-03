@@ -113,8 +113,9 @@
         </DelphiCompile>
         <DCCReference Include="src\Server.pas"/>
         <DCCReference Include="src\constants\Constants.pas"/>
-        <DCCReference Include="src\resources\UVersao.pas"/>
-        <DCCReference Include="src\resources\User.pas"/>
+        <DCCReference Include="src\controllers\controllers.UVersao.pas"/>
+        <DCCReference Include="src\controllers\controllers.User.pas"/>
+        <DCCReference Include="src\services\services.User.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -164,6 +165,12 @@
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\osx64\libcgsqlite3.dylib" Class="DependencyModule">
                     <Platform Name="OSX64">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win64\mybillsapi.rsm" Configuration="Debug" Class="DebugSymbols">
+                    <Platform Name="Win64">
+                        <RemoteName>mybillsapi.rsm</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

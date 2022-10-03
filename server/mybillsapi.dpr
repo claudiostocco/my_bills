@@ -8,8 +8,9 @@ uses
   System.SysUtils,
   Server in 'src\Server.pas',
   Constants in 'src\constants\Constants.pas',
-  UVersao in 'src\resources\UVersao.pas',
-  User in 'src\resources\User.pas';
+  controllers.UVersao in 'src\controllers\controllers.UVersao.pas',
+  controllers.User in 'src\controllers\controllers.User.pas',
+  services.User in 'src\services\services.User.pas';
 
 var sReponse: String;
     bStartServer: Boolean;
