@@ -6,7 +6,7 @@ uses System.SysUtils, System.Classes, System.JSON,
      (* Horse Units *)
      Horse, Horse.CORS, Horse.Jhonson,
      (* Project Units *)
-     Constants, UVersao, User;
+     Config, Constants, controllers.UVersao, controllers.User;
 
 function StartServer: Boolean;
 
@@ -19,7 +19,7 @@ begin
       if (ParamStr(i).ToLower = '-p') and (ParamStr(i+1).Trim <> '') then
          sPort := ParamStr(i+1)
       else if (ParamStr(i).ToLower = '-u') and (ParamStr(i+1).Trim <> '') then
-         dbUrl := ParamStr(i+1)
+         GetConfig.DatabaseUrl := ParamStr(i+1)
       else if ParamStr(i).ToLower = '-service' then
       else if (ParamStr(i).ToLower = '-h') or (ParamStr(i).ToLower = '-?') then
       begin
@@ -37,6 +37,7 @@ end;
 procedure verifySettingsFile;
 var jSettings: TJSONValue;
     sl: TStringList;
+    sTmp: String;
 begin
    try
       sl := TStringList.Create;
@@ -46,9 +47,14 @@ begin
 //         TLog.LogTXT('mybills.log',e.Message);
       end;
       jSettings := TJSONObject.ParseJSONValue(sl.Text);                         //<TJSONObject>
-      if (jSettings <> nil) and (jSettings is TJSONObject) and (jSettings.GetValue<TJSONValue>('banco de dados') is TJSONObject) then
+      if (jSettings <> nil) and (jSettings is TJSONObject) and (jSettings.GetValue<TJSONValue>('database') is TJSONObject) then
       begin
-         jSettings.GetValue<TJSONValue>('banco de dados').TryGetValue('endereco',dbUrl);
+         jSettings.GetValue<TJSONValue>('database').TryGetValue('path',sTmp);
+         GetConfig.DatabaseUrl := sTmp;
+         jSettings.GetValue<TJSONValue>('database').TryGetValue('username',sTmp);
+         GetConfig.DatabaseUsername := sTmp;
+         jSettings.GetValue<TJSONValue>('database').TryGetValue('password',sTmp);
+         GetConfig.DatabasePassword := sTmp;
       end;
    finally
       try FreeAndNil(sl); except end;
@@ -92,14 +98,14 @@ begin
    sLocalLog := './logs';
    if not DirectoryExists(sLocalLog) then MkDir(sLocalLog);
    WriteLn('Creating Log instance...');
-
+/// Criar Instância de log
 
    WriteLn('Settings checking...');
    verifySettingsFile;
    sPort := '';
    WriteLn('Parameters checking...');
    Result := verifyParameters(sPort);
-   Result := Result and (dbUrl <> '');
+   Result := Result and (GetConfig.DatabaseUrl <> '');
    if not Result then Exit;
    WriteLn('DB settings checking...');
    verifySettingsDB(sPort);

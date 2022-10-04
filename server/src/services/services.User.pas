@@ -2,14 +2,12 @@ unit services.User;
 
 interface
 
-uses System.JSON;
-
-implementation
+uses providers.User;
 
 type
-   TServiceUser = class(TObject)
-   public
-     function listAll(const AParams: TDictionary<String,String>)
-   end;
+   TServiceUser = TUserProvider;
+//   TServiceUser = class(TUserProvider);
+
+implementation
 
 end.

@@ -116,6 +116,10 @@
         <DCCReference Include="src\controllers\controllers.UVersao.pas"/>
         <DCCReference Include="src\controllers\controllers.User.pas"/>
         <DCCReference Include="src\services\services.User.pas"/>
+        <DCCReference Include="src\providers\providers.User.pas"/>
+        <DCCReference Include="src\providers\providers.Connection.pas"/>
+        <DCCReference Include="E:\Systems\lib\AcessoBD.pas"/>
+        <DCCReference Include="src\config\config.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

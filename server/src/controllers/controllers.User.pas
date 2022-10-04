@@ -15,6 +15,8 @@ procedure userDelete(Req: THorseRequest; Res: THorseResponse);
 
 implementation
 
+uses services.User;
+
 procedure userRegistry;
 begin
    THorse.Get('/user',userGet);
@@ -25,18 +27,16 @@ begin
 end;
 
 procedure userGet(Req: THorseRequest; Res: THorseResponse);
+var LService: TServiceUser;
 begin
-   if Req.Params.ContainsKey('id') then
-
-
-      Res.Send<TJSONValue>(nil).Status()
-
-   with TJSONObject.Create do
+   with TServiceUser.Create(nil) do
    begin
-      AddPair('user',USERNAME);
-      AddPair('pass',PASS);
-      Res.Send(ToJSON);
-      Free;
+      try
+//         THTTPStatus.OK
+         Res.Send<TJSONValue>(listAll(Req.Params.Dictionary)).Status(Status);
+      finally
+         Free;
+      end;
    end;
 end;
 

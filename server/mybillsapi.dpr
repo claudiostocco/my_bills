@@ -10,7 +10,11 @@ uses
   Constants in 'src\constants\Constants.pas',
   controllers.UVersao in 'src\controllers\controllers.UVersao.pas',
   controllers.User in 'src\controllers\controllers.User.pas',
-  services.User in 'src\services\services.User.pas';
+  services.User in 'src\services\services.User.pas',
+  providers.User in 'src\providers\providers.User.pas',
+  providers.Connection in 'src\providers\providers.Connection.pas',
+  AcessoBD in 'E:\Systems\lib\AcessoBD.pas',
+  config in 'src\config\config.pas';
 
 var sReponse: String;
     bStartServer: Boolean;

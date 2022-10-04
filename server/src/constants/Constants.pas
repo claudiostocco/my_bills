@@ -2,8 +2,8 @@ unit Constants;
 
 interface
 
-var
-  dbUrl: String = './data.fdb';
+//var
+//  dbUrl: String = './data.fdb';
 
 implementation
 
